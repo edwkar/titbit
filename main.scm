@@ -1,21 +1,34 @@
-;;; This is the underbit Scheme->Java compiler.
+;;; This is the titbit Scheme->Java compiler.
 
 
-(load "macro-expansion.ss")
-(load "cps-conversion.ss")
-(load "util.ss")
+(load "ast.scm")
+(load "lambda-lifting.scm")
+(load "code-generation.scm")
+
+(define input (quote
+
+  (lambda ()
+    ((lambda (n rec)
+      (if (iszero n)
+          1
+          (multiply n
+                    (rec (minus n 1)
+                         rec))))
+     64
+     (lambda (n rec)
+       (if (iszero n)
+           1
+           (multiply n
+                     (rec (minus n 1)
+                          rec))))))
+
+))
 
 
-(define compilation-stages
-  `(
-    ('macro-expansion . expand-macros)
-    ('cps-conversion . convert-to-cps)
-    ('object-based-ast-conversion . convert-to-object-based-ast)
-    ('lambda-lifting . lift-lambdas)
-    ('code-generation . generate-code)))
+(define ast (raw->ast input))
 
+(define lambda-lifted-ast (lambda-lift ast))
 
-(define (main)
-  (let* ((input (read)))
-    input))
-	
+(emit-program lambda-lifted-ast)
+
+(print "")

@@ -21,7 +21,7 @@
   (newline))
 
 
-;; Very simple OO-system
+;; Minimal class-based object-orientation system.,
 
 (define-syntax class
   (syntax-rules (else)
