@@ -1,0 +1,16 @@
+v        meta-var over all variables
+n        meta-var over all integers
+
+E = v
+  | n
+  | (if E E E)
+  | (lambda (v ...) E)
+  | (E E ...)
+  | (extern C "fsfsdf" int void void int)
+
+
+Procedures = 
+    = 
+    + - * /
+    not
+    call/cc  
